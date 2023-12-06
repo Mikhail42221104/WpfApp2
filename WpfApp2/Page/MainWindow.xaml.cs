@@ -1,88 +1,100 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Media;
 using System.Data.SqlClient;
+using OxyPlot;
 using OxyPlot.Series;
+using OxyPlot.Wpf;
+using OxyPlot.Axes;
 
-namespace WpfApp2
+namespace wpfapp2
 {
     public partial class MainWindow : Window
     {
-        private List<DataPoint> dataPoints;
+        private List<WorkScheduleTemplate> scheduletemplates;
+
+        public PlotModel Model { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-
-            // Инициализация графика
-            dataPoints = new List<DataPoint>()
+            scheduletemplates = new List<WorkScheduleTemplate>
             {
-                new DataPoint("Янв", 120),
-                new DataPoint("Фев", 80),
-                new DataPoint("Мар", 150),
-                new DataPoint("Апр", 100),
-                new DataPoint("Май", 130)
+                new WorkScheduleTemplate("standard", 8),
+                new WorkScheduleTemplate("flextime", 10),
+                new WorkScheduleTemplate("part-time", 9),
+                // другие шаблоны
             };
 
-            CreateBarChart();
+            Model = new PlotModel { Title = "Work Schedule" };
+            CreateBarChart(GetScheduleTemplates());
         }
 
-        private void CreateBarChart()
+        private void InitializeComponent()
         {
-            // Создание столбчатой диаграммы
-            char chart = new сhart();
-
-            BarSeries barSeries = new BarSeries();
-
-            // Привязка данных к диаграмме
-            barSeries.ItemsSource = dataPoints;
-            barSeries.DependentValuePath = "Value";
-            barSeries.IndependentValuePath = "Month";
-
-            // Настройка цвета столбцов
-            barSeries.DataPointStyle = new Style(typeof(DataPoint));
-
-            Setter backgroundSetter = new Setter(DataPoint.BackgroundProperty, Brushes.Blue);
-            barSeries.DataPointStyle.Setters.Add(backgroundSetter);
-
-            chart.Series.Add(barSeries);
-            ChartArea.Children.Add(chart);
+            throw new NotImplementedException();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private List<WorkScheduleTemplate> GetScheduleTemplates()
         {
-            // Сохранение данных в базе данных SQL Server
-            string connectionString = "DESKTOP-UG8F1FT";
-            string query = "INSERT INTO WorkSchedule (Month, Value) VALUES (@Month, @Value)";
+            return scheduletemplates;
+        }
+
+        private void CreateBarChart(List<WorkScheduleTemplate> scheduletemplates)
+        {
+            CategoryAxis xaxis = new CategoryAxis { Position = AxisPosition.Bottom };
+            LinearAxis yaxis = new LinearAxis { Position = AxisPosition.Left, Minimum = 0 };
+
+            BarSeries barseries = new BarSeries
+            {
+                Title = "Work Hours",
+                LabelPlacement = LabelPlacement.Inside
+            };
+
+            foreach (var template in scheduletemplates)
+            {
+                //barseries.Items.Add(item: new BarItem { Value = template.WorkHours, Title = template.TemplateName });
+                xaxis.Labels.Add(template.TemplateName);
+            }
+
+            Model.Axes.Add(xaxis);
+            Model.Axes.Add(yaxis);
+            Model.Series.Add(barseries);
+        }
+
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            string connectionString = "DESKTOP-UG8F1FT;initial catalog=Employee work schedule;integrated security=true";
+            string query = "insert into scheduletemplates (templatename, workhours) values (@templatename, @workhours)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                foreach (DataPoint dataPoint in dataPoints)
+                foreach (WorkScheduleTemplate template in GetScheduleTemplates())
                 {
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Month", dataPoint.Month);
-                        command.Parameters.AddWithValue("@Value", dataPoint.Value);
+                        command.Parameters.AddWithValue("@templatename", template.TemplateName);
+                        command.Parameters.AddWithValue("@workhours", template.WorkHours);
                         command.ExecuteNonQuery();
                     }
                 }
             }
 
-            MessageBox.Show("Данные сохранены в базе данных.");
+            MessageBox.Show("Work schedule templates saved to database.");
         }
     }
 
-    public class DataPoint
+    public class WorkScheduleTemplate
     {
-        public string Month { get; set; }
-        public int Value { get; set; }
+        public string TemplateName { get; set; }
+        public int WorkHours { get; set; }
 
-        public DataPoint(string month, int value)
+        public WorkScheduleTemplate(string templateName, int workHours)
         {
-            Month = month;
-            Value = value;
+            TemplateName = templateName;
+            WorkHours = workHours;
         }
     }
 }
