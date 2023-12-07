@@ -1,0 +1,45 @@
+﻿<Window x:Class="WpfApp2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Work Schedule" Height="400" Width="600">
+    <Grid Margin="0,0,0,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+            <Label Content="Шаблон" />
+            <DatePicker x:Name="StartDayPicker" />
+            <DatePicker x:Name="EndDayPicker" />
+            <TextBox x:Name="StartHourTextBox" />
+            <TextBox x:Name="EndHourTextBox" />
+            <Button Content="Создать шаблон" Click="CreateTemplateButton_Click" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+            <Label Content="График работы" />
+            <ListView x:Name="WorkScheduleListView" />
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+            <Label Content="Отсутствия" />
+            <DatePicker x:Name="AbsenceDatePicker" />
+            <Button Content="Добавить отсутствие" Click="AddAbsenceButton_Click" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0,0,0,5">
+            <Label Content="График отсутствий" />
+            <ListView x:Name="AbsenceScheduleListView" />
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Vertical">
+            <Label Content="Подключение к SQL Server" />
+            <TextBox x:Name="ServerTextBox" />
+            <TextBox x:Name="DatabaseTextBox" />
+            <TextBox x:Name="UsernameTextBox" />
+            <PasswordBox x:Name="PasswordBox" />
+            <Button Content="Подключиться" Click="ConnectToSqlServerButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
