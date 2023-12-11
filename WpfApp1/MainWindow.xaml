@@ -20,30 +20,24 @@
             <Label Content="Шаблон" />
             <DatePicker x:Name="StartDayPicker" />
             <DatePicker x:Name="EndDayPicker" />
-            <TextBox x:Name="StartHourTextBox" />
-            <TextBox x:Name="EndHourTextBox" />
             <Button Content="Создать шаблон" Click="CreateTemplateButton_Click" />
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
-            <Label Content="График работы" />
+            <Label Content="Шаблон графика работы" />
             <ListView x:Name="WorkScheduleListView" />
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
-            <Label Content="Отсутствия" />
-            <DatePicker x:Name="AbsenceDatePicker" />
-            <Button Content="Добавить отсутствие" Click="AddAbsenceButton_Click" />
-        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical"/>
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0,0,0,5">
-            <Label Content="График отсутствий" />
+            <Label Content="График работы" />
             <ListView x:Name="AbsenceScheduleListView" />
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Vertical">
-            <Label Content="Подключение к SQL Server" />
-            <TextBox x:Name="ServerTextBox" />
-            <TextBox x:Name="DatabaseTextBox" />
-            <TextBox x:Name="UsernameTextBox" />
-            <PasswordBox x:Name="PasswordBox" />
-            <Button Content="Подключиться" Click="ConnectToSqlServerButton_Click" />
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="-5,5,5,0">
+            <Label Content="График работы" />
+            <TextBox x:Name="ServerTextBox" Width="394" />
+            <TextBox x:Name="DatabaseTextBox" Width="393" />
+            <TextBox x:Name="UsernameTextBox" Width="390" />
+            <PasswordBox x:Name="PasswordBox" Width="392" />
+            <Button Content="Создатьь график" Click="ConnectToSqlServerButton_Click" Width="394" />
         </StackPanel>
     </Grid>
 </Window>
