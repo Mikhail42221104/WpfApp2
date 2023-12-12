@@ -23,6 +23,9 @@ namespace WpfApp1
 
         private void CreateTemplateButton_Click(object sender, RoutedEventArgs e)
         {
+           
+
+
             startDay = StartDayPicker.SelectedDate.ToString();
             endDay = EndDayPicker.SelectedDate.ToString();
             startDay = startDay.Substring(0, startDay.Length - 8);
@@ -43,15 +46,15 @@ namespace WpfApp1
                 string sql = $"INSERT INTO ScheduleTemplates (beginning_of_the_shift,end_of_shift)  VALUES (@beginning_of_the_shift, @end_of_shift)";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@beginning_of_the_shift", $"{startDay}-{endDay}");
-                    command.Parameters.AddWithValue("@end_of_shift", endDay);
+                    command.Parameters.AddWithValue("@beginning_of_the_shift", $"{startDay}");
+                    command.Parameters.AddWithValue("@end_of_shift",$"{endDay}");
                     //command.Parameters.AddWithValue("@working_day_length", $"{startDay}-{endDay}");
 
                     command.ExecuteNonQuery();
                 }
 
             }
-            LoadDataFromDatabase();
+            //LoadDataFromDatabase();
 
         }
 
@@ -59,16 +62,11 @@ namespace WpfApp1
 
         private void ConnectToSqlServerButton_Click(object sender, RoutedEventArgs e)
         {
-            string server = ServerTextBox.Text;
-            string database = DatabaseTextBox.Text;
-            string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;
 
-            using (SqlConnection connection = new SqlConnection($"Server={server};Database={database};User ID={username};Password={password}"))
-            {
-                connection.Open();
-                // TODO: использовать подключение к SQL Server
-            }
+            var selectedItem = WorkScheduleListView.SelectedItems[0];
+            string selectedText = selectedItem.ToString();
+            ServerTextBox.Text = selectedText;
+
         }
 
         private void LoadDataFromDatabase()
@@ -90,22 +88,31 @@ namespace WpfApp1
                         while (reader.Read())
                         {
                             string workingDayLength = reader["beginning_of_the_shift"].ToString();
-
+                            //string workingDayLength = reader["end_of_shift"].ToString();
                             string[] parts = workingDayLength.Split('-');
-
+                            string WorcingendDay = reader["end_of_shift"].ToString();
+                            string[] part = WorcingendDay.Split('-');
                             string startDay = (parts[0]);
-                            string endDay = (parts[1]);
+                            string endDay = (part[0]);
                             //startDay = parts[3];
 
                             workScheduleList.Add($"{startDay}-{endDay}");
 
                         }
                     }
+        connection.Close();
                 }
             }
 
             WorkScheduleListView.ItemsSource = workScheduleList;
         }
+
+        private void ServerTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+
     }
 
     public class WorkSchedule

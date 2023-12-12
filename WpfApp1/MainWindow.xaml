@@ -28,12 +28,12 @@
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical"/>
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0,0,0,5">
-            <Label Content="График работы" />
             <ListView x:Name="AbsenceScheduleListView" />
+            <Label Content="График работы" />
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="-5,5,5,0">
             <Label Content="График работы" />
-            <TextBox x:Name="ServerTextBox" Width="394" />
+            <TextBox x:Name="ServerTextBox" Width="394" TextChanged="ServerTextBox_TextChanged" />
             <TextBox x:Name="DatabaseTextBox" Width="393" />
             <TextBox x:Name="UsernameTextBox" Width="390" />
             <PasswordBox x:Name="PasswordBox" Width="392" />
