@@ -245,11 +245,11 @@ namespace WpfApp1
                     }
 
                     // WorkScheduleListView.Items.Remove(selectedItem);
-                }
-                else
-                {
-                    // Handle error case
-                }
+                //}
+                //else
+                //{
+                //    // Handle error case
+                //}
             }
         }
 
