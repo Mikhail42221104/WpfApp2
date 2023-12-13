@@ -8,36 +8,43 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid Margin="0,0,0,-6">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="136*" />
+            <ColumnDefinition Width="71*"/>
+            <ColumnDefinition Width="96*"/>
+            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="400*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" Grid.ColumnSpan="4" Margin="0,0,0,146" Grid.RowSpan="2">
             <Label Content="Шаблон" />
             <DatePicker x:Name="StartDayPicker" />
             <DatePicker x:Name="EndDayPicker" />
             <Button Content="Создать шаблон" Click="CreateTemplateButton_Click" />
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+        <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Vertical" Margin="0,0,0,146" Grid.RowSpan="2">
             <Label Content="Шаблон графика работы" />
             <ListView x:Name="WorkScheduleListView" />
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical"/>
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0,0,0,5">
+        <Label Content="График работы" Margin="5,1,0,103" Grid.Column="4" Grid.Row="1" />
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Grid.ColumnSpan="4"/>
+        <StackPanel Grid.Column="4" Grid.Row="1" Orientation="Vertical" Margin="2,27,-2,0" Height="119" VerticalAlignment="Top">
             <ListView x:Name="AbsenceScheduleListView" />
-            <Label Content="График работы" />
+
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="-5,5,5,0">
-            <Label Content="График работы" />
-            <TextBox x:Name="ServerTextBox" Width="394" TextChanged="ServerTextBox_TextChanged" />
-            <TextBox x:Name="DatabaseTextBox" Width="393" />
-            <TextBox x:Name="UsernameTextBox" Width="390" />
-            <PasswordBox x:Name="PasswordBox" Width="392" />
+        <Button Content="Добавить выбранный шаблон" Click="ConnectToSqlButton_Click" Margin="4,0,0,119" Grid.Row="1" Grid.ColumnSpan="4" />
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="0,27,0,0" Grid.ColumnSpan="4">
+            <Label Content="График работы" Width="377" />
+
+            <TextBox x:Name="CengeTextBox" Width="394" TextChanged="ServerTextBox_TextChanged" />
+            <TextBox x:Name="StartTimePicker" Width="393" TextChanged="DatabaseTextBox_TextChanged" />
+            <TextBox x:Name="EndTimePicker" Width="399" TextChanged="UsernameTextBox_TextChanged" />
             <Button Content="Создатьь график" Click="ConnectToSqlServerButton_Click" Width="394" />
         </StackPanel>
+        <Button Content="Удалить Шаблон" Click="DEelete_Button_Click" Margin="0,146,10,106" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Red" />
+        <Button Content="Удалить график" Click="Delete_Button_Click" Margin="0,146,393,107" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="2" Grid.RowSpan="2" />
     </Grid>
 </Window>
